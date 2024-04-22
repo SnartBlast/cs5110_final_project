@@ -19,15 +19,13 @@ class Game():
 
     def do_game(self):
         # perform a series of rounds between the two agents  
-        multiplier = 0
+        multiplier = 1
 
         for i in range(self.rounds):
             move_0 = self.agent0_next_move()
             move_1 = self.agent1_next_move()
             self.agent_0_moves.append(move_0)
             self.agent_1_moves.append(move_1)
-#            print(f'move 0 -> {move_0}')
-#            print(f'move 1 -> {move_1}\n')
  
             if (self.agent_0.position == 'developer'):
                 # if both cooperate
@@ -43,7 +41,8 @@ class Game():
                     self.timliness += 1
                 # if both defect
                 else:
-                    muliplier = 0
+                    self.quality -= 1
+                    muliplier = 1
 
             elif (self.agent_0.position == 'manager'):
                 # if both cooperate
@@ -59,7 +58,8 @@ class Game():
                     self.profit += 1
                 # if both defect
                 else:
-                    muliplier = 0
+                    self.timliness -= 1
+                    muliplier = 1
 
             elif (self.agent_0.position == 'stakeholder'):
                 # if both cooperate
@@ -75,7 +75,8 @@ class Game():
                     self.creativity += 1
                 # if both defect
                 else:
-                    muliplier = 0
+                    self.profit -= 1
+                    muliplier = 1
 
             elif (self.agent_0.position == 'customer'):
                 # if both cooperate
@@ -91,7 +92,8 @@ class Game():
                     self.quality += 1
                 # if both defect
                 else:
-                    muliplier = 0
+                    self.creativity -= 1
+                    muliplier = 1
 
         return [self.creativity, self.timliness, self.quality, self.profit]
 
@@ -111,6 +113,14 @@ class Game():
                 return 1
             else:
                 return self.agent_1_moves[-1] 
+
+        # IF ALWAYS D
+        elif (self.agent_0.attitude == 'always_d'):
+            return 0
+
+        # IF YES MAN
+        elif (self.agent_0.attitude == 'yes_man'):
+            return 1
 
         # IF TESTER
         elif (self.agent_0.attitude == 'tester'):
@@ -174,6 +184,14 @@ class Game():
             else:
                 return self.agent_0_moves[-1] 
 
+        # IF ALWAYS D
+        elif (self.agent_1.attitude == 'always_d'):
+            return 0
+
+        # IF YES MAN
+        elif (self.agent_1.attitude == 'yes_man'):
+            return 1
+
         # IF TESTER
         elif (self.agent_1.attitude == 'tester'):
             if (len(self.agent_0_moves) == 0):     
@@ -219,7 +237,7 @@ class Game():
             if (len(self.agent_0_moves) == 0):
                 return 1
             else:
-                return len(self.agent_0_moves) % 2 
+                return (len(self.agent_0_moves) + 1) % 2 
 
         # IF RANDOM
         elif (self.agent_1.attitude == 'random'):
