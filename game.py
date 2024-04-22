@@ -30,7 +30,7 @@ class Game():
             if (self.agent_0.position == 'developer'):
                 # if both cooperate
                 if (move_0 == 1 and move_1 == 1):
-                    self.quality += multiplier
+                    self.quality += 1
                     multiplier += 1
                 # if one cooperates
                 elif (move_0 == 0 and move_1 == 1):
@@ -42,12 +42,11 @@ class Game():
                 # if both defect
                 else:
                     self.quality -= 1
-                    muliplier = 1
 
             elif (self.agent_0.position == 'manager'):
                 # if both cooperate
                 if (move_0 == 1 and move_1 == 1):
-                    self.timliness += multiplier
+                    self.timliness += 1
                     multiplier += 1
                 # if one cooperates
                 elif (move_0 == 0 and move_1 == 1):
@@ -59,12 +58,11 @@ class Game():
                 # if both defect
                 else:
                     self.timliness -= 1
-                    muliplier = 1
 
             elif (self.agent_0.position == 'stakeholder'):
                 # if both cooperate
                 if (move_0 == 1 and move_1 == 1):
-                    self.profit += multiplier
+                    self.profit += 1
                     multiplier += 1
                 # if one cooperates
                 elif (move_0 == 0 and move_1 == 1):
@@ -76,12 +74,11 @@ class Game():
                 # if both defect
                 else:
                     self.profit -= 1
-                    muliplier = 1
 
             elif (self.agent_0.position == 'customer'):
                 # if both cooperate
                 if (move_0 == 1 and move_1 == 1):
-                    self.creativity += multiplier
+                    self.creativity += 1
                     multiplier += 1
                 # if one cooperates
                 elif (move_0 == 0 and move_1 == 1):
@@ -93,7 +90,6 @@ class Game():
                 # if both defect
                 else:
                     self.creativity -= 1
-                    muliplier = 1
 
         return [self.creativity, self.timliness, self.quality, self.profit]
 
