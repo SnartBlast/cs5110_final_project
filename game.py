@@ -1,3 +1,5 @@
+import random
+
 
 class Game():
     def __init__(self, agent_0, agent_1, rounds):
@@ -15,17 +17,213 @@ class Game():
         self.profit = 0
 
 
-
     def do_game(self):
         # perform a series of rounds between the two agents  
-        if (self.agent_0.positon == 'developer'):
+        multiplier = 0
 
-        elif (self.agent_0.position == 'manager'):
+        for i in range(self.rounds):
+            move_0 = self.agent0_next_move()
+            move_1 = self.agent1_next_move()
+            self.agent_0_moves.append(move_0)
+            self.agent_1_moves.append(move_1)
+#            print(f'move 0 -> {move_0}')
+#            print(f'move 1 -> {move_1}\n')
+ 
+            if (self.agent_0.position == 'developer'):
+                # if both cooperate
+                if (move_0 == 1 and move_1 == 1):
+                    self.quality += multiplier
+                    multiplier += 1
+                # if one cooperates
+                elif (move_0 == 0 and move_1 == 1):
+                    self.creativity += 1
+                    self.timliness -= 1
+                elif (move_0 == 1 and move_1 == 0):
+                    self.creativity -= 1
+                    self.timliness += 1
+                # if both defect
+                else:
+                    muliplier = 0
 
-        elif (self.agent_0.position == 'stakeholder'):
+            elif (self.agent_0.position == 'manager'):
+                # if both cooperate
+                if (move_0 == 1 and move_1 == 1):
+                    self.timliness += multiplier
+                    multiplier += 1
+                # if one cooperates
+                elif (move_0 == 0 and move_1 == 1):
+                    self.quality += 1
+                    self.profit -= 1
+                elif (move_0 == 1 and move_1 == 0):
+                    self.quality -= 1
+                    self.profit += 1
+                # if both defect
+                else:
+                    muliplier = 0
 
-        elif (self.agent_0.position == 'customer'):
+            elif (self.agent_0.position == 'stakeholder'):
+                # if both cooperate
+                if (move_0 == 1 and move_1 == 1):
+                    self.profit += multiplier
+                    multiplier += 1
+                # if one cooperates
+                elif (move_0 == 0 and move_1 == 1):
+                    self.timliness += 1
+                    self.creativity -= 1
+                elif (move_0 == 1 and move_1 == 0):
+                    self.timliness -= 1
+                    self.creativity += 1
+                # if both defect
+                else:
+                    muliplier = 0
+
+            elif (self.agent_0.position == 'customer'):
+                # if both cooperate
+                if (move_0 == 1 and move_1 == 1):
+                    self.creativity += multiplier
+                    multiplier += 1
+                # if one cooperates
+                elif (move_0 == 0 and move_1 == 1):
+                    self.profit += 1
+                    self.quality -= 1
+                elif (move_0 == 1 and move_1 == 0):
+                    self.profit -= 1
+                    self.quality += 1
+                # if both defect
+                else:
+                    muliplier = 0
+
+        return [self.creativity, self.timliness, self.quality, self.profit]
+
+
+    def report(self):
+        # report the score of the rounds of the game
+        print(f'Creativity -> {self.creativity}') 
+        print(f'   Quality -> {self.quality}') 
+        print(f' Timliness -> {self.timliness}') 
+        print(f'    Profit -> {self.profit}') 
+ 
+
+    def agent0_next_move(self):
+        # IF TIT FOR TAT
+        if (self.agent_0.attitude == 'tit_for_tat'):
+            if (len(self.agent_0_moves) == 0):
+                return 1
+            else:
+                return self.agent_1_moves[-1] 
+
+        # IF TESTER
+        elif (self.agent_0.attitude == 'tester'):
+            if (len(self.agent_0_moves) == 0):     
+                return 0
+            else:
+                if (len(self.agent_1_moves) == 1):
+                    # if retaliate 
+                    if (self.agent_1_moves[0] == 0):
+                        return 1
+                    else:
+                        return 0
+                else:
+                    if (len(self.agent_1_moves) > 1):
+                        return self.agent_1_moves[-1]
+                    else:
+                        return 1
+
+        # IF JOSS
+        elif (self.agent_0.attitude == 'joss'):
+            if (len(self.agent_0_moves) == 0):
+                return 1
+            else:
+                if (random.randint(1, 10) == 1):
+                    return 0
+                else:
+                    if (len(self.agent_0_moves) >= 1):
+                        return self.agent_0_moves[-1] 
+                    else:
+                        return 1
+
+        # IF TIT FOR TWO TATS
+        elif (self.agent_0.attitude == 'tit_for_two_tats'):
+            if (len(self.agent_1_moves) >= 2):  
+                if (self.agent_1_moves[-1] == 0 and self.agent_1_moves[-2] == 0):
+                    return 0
+                else:
+                    return 1
+            else:
+                return 1
+
+        # IF CONFRONTATIONAL
+        elif (self.agent_0.attitude == 'confrontational'):
+            if (len(self.agent_1_moves) == 0):
+                return 1
+            else:
+                return len(self.agent_1_moves) % 2 
+
+        # IF RANDOM
+        elif (self.agent_0.attitude == 'random'):
+            return random.randint(0, 1)
         
+
+
+    def agent1_next_move(self):
+        # given the agent attitude and previous moves, determine next move
+        # IF TIT FOR TAT
+        if (self.agent_1.attitude == 'tit_for_tat'):
+            if (len(self.agent_1_moves) == 0):
+                return 1
+            else:
+                return self.agent_0_moves[-1] 
+
+        # IF TESTER
+        elif (self.agent_1.attitude == 'tester'):
+            if (len(self.agent_0_moves) == 0):     
+                return 0
+            else:
+                if (len(self.agent_0_moves) == 2):
+                    # if retaliate 
+                    if (self.agent_0_moves[-1] == 0):
+                        return 1
+                    else:
+                        return 0
+                else:
+                    if (len(self.agent_0_moves) > 1):
+                        return self.agent_0_moves[-1]
+                    else:
+                        return 1
+
+        # IF JOSS
+        elif (self.agent_1.attitude == 'joss'):
+            if (len(self.agent_1_moves) == 0):
+                return 1
+            else:
+                if (random.randint(1, 10) == 1):
+                    return 0
+                else:
+                    if (len(self.agent_0_moves) >= 1):
+                        return self.agent_0_moves[-1] 
+                    else:
+                        return 1
+
+        # IF TIT FOR TWO TATS
+        elif (self.agent_1.attitude == 'tit_for_two_tats'):
+            if (len(self.agent_0_moves) >= 2):  
+                if (self.agent_0_moves[-1] == 0 and self.agent_0_moves[-2] == 0):
+                    return 0
+                else:
+                    return 1
+            else:
+                return 1
+
+        # IF CONFRONTATIONAL
+        elif (self.agent_1.attitude == 'confrontational'):
+            if (len(self.agent_0_moves) == 0):
+                return 1
+            else:
+                return len(self.agent_0_moves) % 2 
+
+        # IF RANDOM
+        elif (self.agent_1.attitude == 'random'):
+            return random.randint(0, 1)
         
 
     def print_board(self):
