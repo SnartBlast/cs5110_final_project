@@ -30,66 +30,70 @@ class Game():
             if (self.agent_0.position == 'developer'):
                 # if both cooperate
                 if (move_0 == 1 and move_1 == 1):
-                    self.quality += 1
-                    multiplier += 1
+                    self.quality += multiplier
+                    multiplier += 0.05
                 # if one cooperates
                 elif (move_0 == 0 and move_1 == 1):
-                    self.creativity += 1
-                    self.timliness -= 1
+                    self.creativity += 1.5
+                    self.timliness -= 1.5
                 elif (move_0 == 1 and move_1 == 0):
-                    self.creativity -= 1
-                    self.timliness += 1
+                    self.creativity -= 1.5
+                    self.timliness += 1.5
                 # if both defect
                 else:
-                    self.quality -= 1
+                    self.quality -= multiplier
+                    multiplier = 1
 
             elif (self.agent_0.position == 'manager'):
                 # if both cooperate
                 if (move_0 == 1 and move_1 == 1):
-                    self.timliness += 1
-                    multiplier += 1
+                    self.timliness += multiplier
+                    multiplier += 0.05
                 # if one cooperates
                 elif (move_0 == 0 and move_1 == 1):
-                    self.quality += 1
-                    self.profit -= 1
+                    self.quality += 1.5
+                    self.profit -= 1.5
                 elif (move_0 == 1 and move_1 == 0):
-                    self.quality -= 1
-                    self.profit += 1
+                    self.quality -= 1.5
+                    self.profit += 1.5
                 # if both defect
                 else:
-                    self.timliness -= 1
+                    self.timliness -= multiplier
+                    multiplier = 1
 
             elif (self.agent_0.position == 'stakeholder'):
                 # if both cooperate
                 if (move_0 == 1 and move_1 == 1):
-                    self.profit += 1
-                    multiplier += 1
+                    self.profit += multiplier
+                    multiplier += 0.05
                 # if one cooperates
                 elif (move_0 == 0 and move_1 == 1):
-                    self.timliness += 1
-                    self.creativity -= 1
+                    self.timliness += 1.5
+                    self.creativity -= 1.5
                 elif (move_0 == 1 and move_1 == 0):
-                    self.timliness -= 1
-                    self.creativity += 1
+                    self.timliness -= 1.5
+                    self.creativity += 1.5
                 # if both defect
                 else:
-                    self.profit -= 1
+                    self.profit -= multiplier
+                    multiplier = 1
 
             elif (self.agent_0.position == 'customer'):
                 # if both cooperate
                 if (move_0 == 1 and move_1 == 1):
-                    self.creativity += 1
-                    multiplier += 1
+                    self.creativity += multiplier
+                    multiplier += 0.05
                 # if one cooperates
                 elif (move_0 == 0 and move_1 == 1):
-                    self.profit += 1
-                    self.quality -= 1
+                    self.profit += 1.5
+                    self.quality -= 1.5
                 elif (move_0 == 1 and move_1 == 0):
-                    self.profit -= 1
-                    self.quality += 1
+                    self.profit -= 1.5
+                    self.quality += 1.5
                 # if both defect
                 else:
-                    self.creativity -= 1
+                    self.creativity -= multiplier
+                    multiplier = 1
 
         return [self.creativity, self.timliness, self.quality, self.profit]
 
