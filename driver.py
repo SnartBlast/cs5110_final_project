@@ -8,10 +8,10 @@ if __name__ == '__main__':
 
     # diverse attitude set
     attitude_set_0 = ['tit_for_tat', 'tester', 'joss', 'tit_for_two_tats', 
-                      'confrontational', 'random', 'always_d', 'yes_man']
+                      'confrontational', 'random', 'always_d', 'yes_man', 'trusting']
 
     # forgiving attitude set
-    attitude_set_1 = ['tit_for_tat', 'tester', 'tit_for_two_tats', 'joss', 'yes_man']
+    attitude_set_1 = ['tit_for_tat', 'trusting', 'tit_for_two_tats', 'joss', 'yes_man']
 
     # confrontational data set
     attitude_set_2 = ['tester', 'confrontational', 'random', 'always_d']

@@ -110,6 +110,16 @@ class Game():
             else:
                 return self.agent_1_moves[-1] 
 
+        # IF TRUSTING
+        elif (self.agent_0.attitude == 'trusting'):
+            if (len(self.agent_1_moves) >= 2):
+                if (self.agent_1_moves[-1] == 1 and self.agent_1_moves[-2] == 1):
+                    return 1
+                else:
+                    return 0
+            else:
+                return 1
+            
         # IF ALWAYS D
         elif (self.agent_0.attitude == 'always_d'):
             return 0
@@ -179,6 +189,16 @@ class Game():
                 return 1
             else:
                 return self.agent_0_moves[-1] 
+
+        # IF TRUSTING
+        elif (self.agent_1.attitude == 'trusting'):
+            if (len(self.agent_0_moves) >= 2):
+                if (self.agent_0_moves[-1] == 1 and self.agent_0_moves[-2] == 1):
+                    return 1
+                else:
+                    return 0
+            else:
+                return 1
 
         # IF ALWAYS D
         elif (self.agent_1.attitude == 'always_d'):
